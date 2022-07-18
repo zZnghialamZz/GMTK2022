@@ -78,8 +78,11 @@ namespace GMTK2022.Core
         /// A set of input actions to use to read input on
         public InputControl inputActions;
 
-        /// The activate button, used for many interactions
-        public InputButton InteractButton { get; protected set; }
+        /// The roll button
+        public InputButton Roll { get; protected set; }
+
+        /// The Swap button
+        public InputButton Swap { get; protected set; }
 
         /// The primary movement value (used to move the character around)
         public Vector2 PrimaryAxis { get { return _primaryAxis; } set { _primaryAxis = value; } }
@@ -93,13 +96,15 @@ namespace GMTK2022.Core
         {
             // Init buttons
             _buttonList = new List<InputButton>();
-            _buttonList.Add(InteractButton = new InputButton());
+            _buttonList.Add(Roll = new InputButton());
+            _buttonList.Add(Swap = new InputButton());
 
             // Bind Actions
             inputActions = new InputControl();
             inputActions.Enable();
             inputActions.InGame.Movement.performed += context => _primaryAxis = context.ReadValue<Vector2>();
-            // inputActions.PlayerControls.Interact.performed += context => { BindButton(context, InteractButton); };
+            inputActions.InGame.Roll.performed += context => { BindButton(context, Roll); };
+            inputActions.InGame.Swap.performed += context => { BindButton(context, Swap); };
         }
 
         public void LateUpdate()

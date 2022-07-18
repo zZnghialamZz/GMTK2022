@@ -14,8 +14,9 @@ namespace GMTK2022.Core
 
     public class GameManagers : PersistentSingleton<GameManagers>, IManager
     {
-        public GridManager gridManager;
+        public GameplayManager gameplayManager;
         public InputManager inputManager;
+        public LevelManager levelManager;
 
         protected override void Awake()
         {
@@ -25,14 +26,16 @@ namespace GMTK2022.Core
 
         public void Initialize()
         {
-            gridManager?.Initialize();
+            gameplayManager?.Initialize();
             inputManager.Initialize();
+            levelManager.Initialize();
         }
     }
 
     public static class GM
     {
-        public static GridManager Grid => GameManagers.Instance.gridManager;
+        public static GameplayManager Gameplay => GameManagers.Instance.gameplayManager;
         public static InputManager Input => GameManagers.Instance.inputManager;
+        public static LevelManager Level => GameManagers.Instance.levelManager;
     }
 }
